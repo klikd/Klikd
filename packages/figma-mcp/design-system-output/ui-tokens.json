@@ -1,0 +1,54 @@
+{
+  "category": "ui",
+  "tokens": [
+    {
+      "name": "color.ui.dark_bg",
+      "value": "#0B0B0B",
+      "type": "color",
+      "category": "ui",
+      "description": "Klikd UI color: dark_bg"
+    },
+    {
+      "name": "color.ui.soft_gray",
+      "value": "#999999",
+      "type": "color",
+      "category": "ui",
+      "description": "Klikd UI color: soft_gray"
+    },
+    {
+      "name": "color.ui.border_gray",
+      "value": "#333333",
+      "type": "color",
+      "category": "ui",
+      "description": "Klikd UI color: border_gray"
+    },
+    {
+      "name": "color.ui.success",
+      "value": "#4CAF50",
+      "type": "color",
+      "category": "ui",
+      "description": "Klikd UI color: success"
+    },
+    {
+      "name": "color.ui.warning",
+      "value": "#FF9800",
+      "type": "color",
+      "category": "ui",
+      "description": "Klikd UI color: warning"
+    },
+    {
+      "name": "color.ui.error",
+      "value": "#FF6B6B",
+      "type": "color",
+      "category": "ui",
+      "description": "Klikd UI color: error"
+    },
+    {
+      "name": "color.ui.info",
+      "value": "#2196F3",
+      "type": "color",
+      "category": "ui",
+      "description": "Klikd UI color: info"
+    }
+  ]
+}

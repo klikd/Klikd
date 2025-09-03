@@ -1,0 +1,40 @@
+{
+  "category": "borderRadius",
+  "tokens": [
+    {
+      "name": "borderRadius.sm",
+      "value": 4,
+      "type": "borderRadius",
+      "category": "borderRadius",
+      "description": "Border radius: sm"
+    },
+    {
+      "name": "borderRadius.md",
+      "value": 8,
+      "type": "borderRadius",
+      "category": "borderRadius",
+      "description": "Border radius: md"
+    },
+    {
+      "name": "borderRadius.lg",
+      "value": 12,
+      "type": "borderRadius",
+      "category": "borderRadius",
+      "description": "Border radius: lg"
+    },
+    {
+      "name": "borderRadius.xl",
+      "value": 16,
+      "type": "borderRadius",
+      "category": "borderRadius",
+      "description": "Border radius: xl"
+    },
+    {
+      "name": "borderRadius.xxl",
+      "value": 20,
+      "type": "borderRadius",
+      "category": "borderRadius",
+      "description": "Border radius: xxl"
+    }
+  ]
+}

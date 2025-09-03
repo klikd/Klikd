@@ -1,0 +1,77 @@
+name: Design System Auto-Sync
+
+on:
+  push:
+    branches: [main, develop]
+    paths:
+      - 'apps/**/src/design/**'
+      - 'packages/design-system/**'
+      - 'packages/figma-mcp/**'
+  pull_request:
+    branches: [main, develop]
+    paths:
+      - 'apps/**/src/design/**'
+      - 'packages/design-system/**'
+      - 'packages/figma-mcp/**'
+  workflow_dispatch:
+    inputs:
+      figma_file_key:
+        description: 'Figma file key to sync with'
+        required: true
+        default: '2M5cftWvofNAYTV5yuFVkY'
+
+jobs:
+  sync-design-system:
+    runs-on: ubuntu-latest
+    name: Sync Design System with Figma
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: |
+          npm install -g pnpm
+          pnpm install
+          
+      - name: Build Figma MCP package
+        run: |
+          cd packages/figma-mcp
+          pnpm build
+          
+      - name: Run design system sync
+        env:
+          FIGMA_ACCESS_TOKEN: ${{ secrets.FIGMA_ACCESS_TOKEN }}
+        run: |
+          cd packages/figma-mcp
+          npx tsx src/scripts/auto-sync.ts \
+            -f ${{ github.event.inputs.figma_file_key || '2M5cftWvofNAYTV5yuFVkY' }} \
+            -o ./design-system-output \
+            --generate-types \
+            --generate-css \
+            --generate-scss \
+            --generate-storybook
+            
+      - name: Upload design system artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: design-system-output
+          path: packages/figma-mcp/design-system-output/
+          
+      - name: Commit updated design tokens
+        run: |
+          cd packages/figma-mcp/design-system-output
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add .
+          git diff --quiet && git diff --staged --quiet || git commit -m "🤖 Auto-sync design system tokens [skip ci]"
+          
+      - name: Push design system updates
+        run: |
+          git push origin HEAD:${{ github.ref }}

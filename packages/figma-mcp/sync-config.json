@@ -1,0 +1,44 @@
+{
+  "figma": {
+    "fileKey": "2M5cftWvofNAYTV5yuFVkY",
+    "teamId": "",
+    "projectId": "",
+    "webhookUrl": ""
+  },
+  "output": {
+    "directory": "./design-system-output",
+    "formats": {
+      "json": true,
+      "typescript": true,
+      "css": true,
+      "scss": true,
+      "storybook": true
+    }
+  },
+  "sync": {
+    "watch": false,
+    "interval": 30000,
+    "validate": true,
+    "autoCommit": true,
+    "backup": true
+  },
+  "designSystem": {
+    "name": "Klikd Design System",
+    "version": "1.0.0",
+    "description": "Official Klikd brand design system",
+    "source": "code",
+    "categories": [
+      "colors",
+      "typography", 
+      "spacing",
+      "borderRadius",
+      "shadows",
+      "components"
+    ]
+  },
+  "notifications": {
+    "slack": false,
+    "email": false,
+    "github": true
+  }
+}

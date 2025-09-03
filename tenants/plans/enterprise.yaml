@@ -1,0 +1,101 @@
+name: "Enterprise"
+description: "Full-scale platform with unlimited resources and premium support"
+price: 2999
+currency: "USD"
+billing_cycle: "monthly"
+trial_days: 30
+
+limits:
+  # API Usage (Unlimited)
+  api_requests_per_hour: -1
+  api_requests_per_day: -1
+  
+  # Storage (Unlimited)
+  storage_gb: -1
+  asset_uploads_per_month: -1
+  
+  # Users & Teams (Unlimited)
+  users: -1
+  team_members: -1
+  
+  # Campaigns & Missions (Unlimited)
+  campaigns: -1
+  active_campaigns: -1
+  missions_per_month: -1
+  mission_participants: -1
+  
+  # AR Features (Unlimited)
+  ar_anchors: -1
+  ar_assets_gb: -1
+  ar_sessions_per_month: -1
+  
+  # Analytics (Unlimited)
+  analytics_retention_days: -1
+  custom_events: -1
+
+features:
+  # All Core Features
+  - advanced_analytics
+  - priority_support
+  - mobile_app_access
+  - ar_experiences
+  - mission_participation
+  - social_sharing
+  - advanced_rewards
+  - gamification_engine
+  
+  # Business Features
+  - campaign_management
+  - audience_targeting
+  - conversion_tracking
+  - revenue_analytics
+  - multi_tenant_management
+  
+  # Enterprise Features
+  - custom_branding
+  - white_label_solution
+  - full_api_access
+  - custom_integrations
+  - dedicated_infrastructure
+  - custom_domains
+  - sso_integration
+  - advanced_security
+  
+  # Integrations
+  - stripe_payments
+  - stc_pay_integration
+  - shopify_integration
+  - advanced_webhooks
+  - zapier_integration
+  - salesforce_integration
+  
+  # Support & Services
+  - dedicated_account_manager
+  - custom_development
+  - training_sessions
+  - implementation_support
+
+restrictions: []
+
+support:
+  type: "dedicated"
+  response_time: "1_hour"
+  channels: ["phone", "email", "slack", "dedicated_manager"]
+  account_manager: true
+  custom_development: true
+
+compliance:
+  data_retention_days: -1
+  audit_logs: true
+  gdpr_tools: "advanced"
+  mawthoq_certified: true
+  hipaa_compliant: true
+  soc2_compliant: true
+  custom_compliance: true
+
+sla:
+  uptime_guarantee: "99.99%"
+  response_time_ms: 100
+  support_response_hours: 1
+  data_backup_frequency: "real_time"
+  disaster_recovery_rto: "15_minutes"

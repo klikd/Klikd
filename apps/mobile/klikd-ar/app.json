@@ -1,0 +1,40 @@
+{
+  "expo": {
+    "name": "Klikd AR",
+    "slug": "klikd-ar",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "automatic",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#007AFF"
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.klikd.ar",
+      "infoPlist": {
+        "NSCameraUsageDescription": "This app uses the camera for AR experiences and content creation.",
+        "NSLocationWhenInUseUsageDescription": "This app uses location to provide location-based missions and AR anchors."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#007AFF"
+      },
+      "package": "com.klikd.ar",
+      "permissions": [
+        "CAMERA",
+        "ACCESS_FINE_LOCATION",
+        "RECORD_AUDIO"
+      ]
+    },
+    "web": {
+    },
+    "plugins": [
+      "expo-camera"
+    ]
+  }
+}

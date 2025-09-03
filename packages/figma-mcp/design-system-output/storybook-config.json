@@ -1,0 +1,226 @@
+{
+  "title": "Klikd Design System",
+  "parameters": {
+    "designTokens": {
+      "categories": {
+        "primary": [
+          {
+            "name": "color.primary.klikd_green",
+            "value": "#ECFF00",
+            "type": "color",
+            "category": "primary",
+            "description": "Klikd primary brand color: klikd_green"
+          },
+          {
+            "name": "color.primary.klikd_black",
+            "value": "#0B0B0B",
+            "type": "color",
+            "category": "primary",
+            "description": "Klikd primary brand color: klikd_black"
+          },
+          {
+            "name": "color.primary.klikd_white",
+            "value": "#FFFFFF",
+            "type": "color",
+            "category": "primary",
+            "description": "Klikd primary brand color: klikd_white"
+          }
+        ],
+        "ui": [
+          {
+            "name": "color.ui.dark_bg",
+            "value": "#0B0B0B",
+            "type": "color",
+            "category": "ui",
+            "description": "Klikd UI color: dark_bg"
+          },
+          {
+            "name": "color.ui.soft_gray",
+            "value": "#999999",
+            "type": "color",
+            "category": "ui",
+            "description": "Klikd UI color: soft_gray"
+          },
+          {
+            "name": "color.ui.border_gray",
+            "value": "#333333",
+            "type": "color",
+            "category": "ui",
+            "description": "Klikd UI color: border_gray"
+          },
+          {
+            "name": "color.ui.success",
+            "value": "#4CAF50",
+            "type": "color",
+            "category": "ui",
+            "description": "Klikd UI color: success"
+          },
+          {
+            "name": "color.ui.warning",
+            "value": "#FF9800",
+            "type": "color",
+            "category": "ui",
+            "description": "Klikd UI color: warning"
+          },
+          {
+            "name": "color.ui.error",
+            "value": "#FF6B6B",
+            "type": "color",
+            "category": "ui",
+            "description": "Klikd UI color: error"
+          },
+          {
+            "name": "color.ui.info",
+            "value": "#2196F3",
+            "type": "color",
+            "category": "ui",
+            "description": "Klikd UI color: info"
+          }
+        ],
+        "typography": [
+          {
+            "name": "typography.size.xs",
+            "value": 10,
+            "type": "typography",
+            "category": "typography",
+            "description": "Font size: xs"
+          },
+          {
+            "name": "typography.size.sm",
+            "value": 12,
+            "type": "typography",
+            "category": "typography",
+            "description": "Font size: sm"
+          },
+          {
+            "name": "typography.size.md",
+            "value": 14,
+            "type": "typography",
+            "category": "typography",
+            "description": "Font size: md"
+          },
+          {
+            "name": "typography.size.lg",
+            "value": 16,
+            "type": "typography",
+            "category": "typography",
+            "description": "Font size: lg"
+          },
+          {
+            "name": "typography.size.xl",
+            "value": 18,
+            "type": "typography",
+            "category": "typography",
+            "description": "Font size: xl"
+          },
+          {
+            "name": "typography.size.xxl",
+            "value": 20,
+            "type": "typography",
+            "category": "typography",
+            "description": "Font size: xxl"
+          },
+          {
+            "name": "typography.size.xxxl",
+            "value": 24,
+            "type": "typography",
+            "category": "typography",
+            "description": "Font size: xxxl"
+          }
+        ],
+        "spacing": [
+          {
+            "name": "spacing.xs",
+            "value": 4,
+            "type": "spacing",
+            "category": "spacing",
+            "description": "Spacing unit: xs"
+          },
+          {
+            "name": "spacing.sm",
+            "value": 8,
+            "type": "spacing",
+            "category": "spacing",
+            "description": "Spacing unit: sm"
+          },
+          {
+            "name": "spacing.md",
+            "value": 12,
+            "type": "spacing",
+            "category": "spacing",
+            "description": "Spacing unit: md"
+          },
+          {
+            "name": "spacing.lg",
+            "value": 16,
+            "type": "spacing",
+            "category": "spacing",
+            "description": "Spacing unit: lg"
+          },
+          {
+            "name": "spacing.xl",
+            "value": 20,
+            "type": "spacing",
+            "category": "spacing",
+            "description": "Spacing unit: xl"
+          },
+          {
+            "name": "spacing.xxl",
+            "value": 24,
+            "type": "spacing",
+            "category": "spacing",
+            "description": "Spacing unit: xxl"
+          },
+          {
+            "name": "spacing.xxxl",
+            "value": 32,
+            "type": "spacing",
+            "category": "spacing",
+            "description": "Spacing unit: xxxl"
+          }
+        ],
+        "borderRadius": [
+          {
+            "name": "borderRadius.sm",
+            "value": 4,
+            "type": "borderRadius",
+            "category": "borderRadius",
+            "description": "Border radius: sm"
+          },
+          {
+            "name": "borderRadius.md",
+            "value": 8,
+            "type": "borderRadius",
+            "category": "borderRadius",
+            "description": "Border radius: md"
+          },
+          {
+            "name": "borderRadius.lg",
+            "value": 12,
+            "type": "borderRadius",
+            "category": "borderRadius",
+            "description": "Border radius: lg"
+          },
+          {
+            "name": "borderRadius.xl",
+            "value": 16,
+            "type": "borderRadius",
+            "category": "borderRadius",
+            "description": "Border radius: xl"
+          },
+          {
+            "name": "borderRadius.xxl",
+            "value": 20,
+            "type": "borderRadius",
+            "category": "borderRadius",
+            "description": "Border radius: xxl"
+          }
+        ]
+      },
+      "metadata": {
+        "generatedAt": "2025-09-03T12:35:56.621Z",
+        "totalTokens": 29
+      }
+    }
+  }
+}

@@ -1,0 +1,69 @@
+name: "Free"
+description: "Get started with basic AR experiences and social commerce"
+price: 0
+currency: "USD"
+billing_cycle: null
+trial_days: 0
+
+limits:
+  # API Usage
+  api_requests_per_hour: 1000
+  api_requests_per_day: 10000
+  
+  # Storage
+  storage_mb: 100
+  asset_uploads_per_month: 10
+  
+  # Users & Teams
+  users: 5
+  team_members: 1
+  
+  # Campaigns & Missions
+  campaigns: 1
+  active_campaigns: 1
+  missions_per_month: 100
+  mission_participants: 100
+  
+  # AR Features
+  ar_anchors: 10
+  ar_assets_mb: 50
+  ar_sessions_per_month: 500
+  
+  # Analytics
+  analytics_retention_days: 30
+  custom_events: 10
+
+features:
+  # Core Features
+  - basic_analytics
+  - community_support
+  - mobile_app_access
+  - ar_experiences
+  - mission_participation
+  - social_sharing
+  - basic_rewards
+  
+  # Integrations
+  - stripe_payments
+  - basic_webhooks
+
+restrictions:
+  - no_custom_branding
+  - no_white_label
+  - no_api_access
+  - no_priority_support
+  - no_advanced_analytics
+  - no_custom_domains
+  - no_sso_integration
+  - watermarked_ar_content
+
+support:
+  type: "community"
+  response_time: "best_effort"
+  channels: ["documentation", "community_forum"]
+
+compliance:
+  data_retention_days: 90
+  audit_logs: false
+  gdpr_tools: "basic"
+  mawthoq_certified: true

@@ -1,0 +1,27 @@
+{
+  "name": "@klikd/ar-engine",
+  "version": "1.0.0",
+  "description": "Cross-platform AR engine with spatial interaction and offline-first capabilities",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "vitest",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@klikd/contracts": "workspace:*",
+    "three": "^0.157.0",
+    "gl-matrix": "^3.4.3"
+  },
+  "devDependencies": {
+    "@types/three": "^0.157.0",
+    "@types/node": "^20.10.5",
+    "typescript": "^5.3.3",
+    "vitest": "^1.0.4"
+  }
+}

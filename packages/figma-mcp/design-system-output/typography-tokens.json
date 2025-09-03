@@ -1,0 +1,54 @@
+{
+  "category": "typography",
+  "tokens": [
+    {
+      "name": "typography.size.xs",
+      "value": 10,
+      "type": "typography",
+      "category": "typography",
+      "description": "Font size: xs"
+    },
+    {
+      "name": "typography.size.sm",
+      "value": 12,
+      "type": "typography",
+      "category": "typography",
+      "description": "Font size: sm"
+    },
+    {
+      "name": "typography.size.md",
+      "value": 14,
+      "type": "typography",
+      "category": "typography",
+      "description": "Font size: md"
+    },
+    {
+      "name": "typography.size.lg",
+      "value": 16,
+      "type": "typography",
+      "category": "typography",
+      "description": "Font size: lg"
+    },
+    {
+      "name": "typography.size.xl",
+      "value": 18,
+      "type": "typography",
+      "category": "typography",
+      "description": "Font size: xl"
+    },
+    {
+      "name": "typography.size.xxl",
+      "value": 20,
+      "type": "typography",
+      "category": "typography",
+      "description": "Font size: xxl"
+    },
+    {
+      "name": "typography.size.xxxl",
+      "value": 24,
+      "type": "typography",
+      "category": "typography",
+      "description": "Font size: xxxl"
+    }
+  ]
+}

@@ -1,0 +1,35 @@
+{
+  "name": "@klikd/design-system",
+  "version": "1.0.0",
+  "description": "Klikd Design System - Tokens, themes, and UI primitives",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "style-dictionary build && tsc",
+    "build:tokens": "style-dictionary build",
+    "dev": "tsc --watch",
+    "test": "vitest",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix",
+    "typecheck": "tsc --noEmit",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "dependencies": {
+    "style-dictionary": "^3.9.0"
+  },
+  "devDependencies": {
+    "@storybook/addon-essentials": "^7.6.6",
+    "@storybook/addon-interactions": "^7.6.6",
+    "@storybook/addon-links": "^7.6.6",
+    "@storybook/blocks": "^7.6.6",
+    "@storybook/react": "^7.6.6",
+    "@storybook/react-vite": "^7.6.6",
+    "@storybook/testing-library": "^0.2.2",
+    "@types/node": "^20.10.5",
+    "storybook": "^7.6.6",
+    "typescript": "^5.3.3",
+    "vitest": "^1.0.4"
+  }
+}

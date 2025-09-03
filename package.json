@@ -1,0 +1,73 @@
+{
+  "name": "klikd-platform",
+  "version": "1.0.0",
+  "description": "AR-powered social commerce platform for MENA markets",
+  "private": true,
+  "workspaces": [
+    "apps/*",
+    "apps/mobile/*",
+    "packages/*"
+  ],
+  "packageManager": "pnpm@8.15.0",
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  },
+  "scripts": {
+    "dev": "turbo run dev --parallel",
+    "build": "pnpm design:sync:ci && turbo run build",
+    "build:fast": "turbo run build",
+    "typecheck": "turbo run typecheck",
+    "lint": "turbo run lint",
+    "lint:fix": "turbo run lint:fix",
+    "test": "turbo run test",
+    "test:e2e": "turbo run test:e2e",
+    "test:unit": "turbo run test:unit",
+    "test:integration": "turbo run test:integration",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "release": "changeset publish",
+    "version": "changeset version",
+    "check:env": "node scripts/check-env.mjs",
+    "check:contracts": "node scripts/generate-openapi.mjs --validate",
+    "generate:openapi": "node scripts/generate-openapi.mjs",
+    "setup": "node scripts/setup.mjs",
+    "migrate": "node scripts/migrate.mjs",
+    "seed": "node scripts/seed.mjs",
+    "deploy": "node scripts/deploy.mjs",
+    "design:sync": "cd packages/figma-mcp && pnpm auto:sync -f 2M5cftWvofNAYTV5yuFVkY",
+    "design:sync:watch": "cd packages/figma-mcp && pnpm auto:sync:watch -f 2M5cftWvofNAYTV5yuFVkY -w",
+    "design:sync:ci": "cd packages/figma-mcp && pnpm auto:sync:ci -f 2M5cftWvofNAYTV5yuFVkY",
+    "design:dev": "pnpm design:sync:watch & pnpm dev"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.27.1",
+    "@commitlint/cli": "^18.4.3",
+    "@commitlint/config-conventional": "^18.4.3",
+    "@eslint/js": "^8.57.0",
+    "@types/node": "^20.10.5",
+    "@typescript-eslint/eslint-plugin": "^6.15.0",
+    "@typescript-eslint/parser": "^6.15.0",
+    "eslint": "^8.56.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-import": "^2.29.1",
+    "husky": "^8.0.3",
+    "lint-staged": "^15.2.0",
+    "prettier": "^3.1.1",
+    "turbo": "^1.11.2",
+    "typescript": "^5.3.3"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix",
+      "prettier --write"
+    ],
+    "*.{json,md,yml,yaml}": [
+      "prettier --write"
+    ]
+  },
+  "commitlint": {
+    "extends": [
+      "@commitlint/config-conventional"
+    ]
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "category": "spacing",
+  "tokens": [
+    {
+      "name": "spacing.xs",
+      "value": 4,
+      "type": "spacing",
+      "category": "spacing",
+      "description": "Spacing unit: xs"
+    },
+    {
+      "name": "spacing.sm",
+      "value": 8,
+      "type": "spacing",
+      "category": "spacing",
+      "description": "Spacing unit: sm"
+    },
+    {
+      "name": "spacing.md",
+      "value": 12,
+      "type": "spacing",
+      "category": "spacing",
+      "description": "Spacing unit: md"
+    },
+    {
+      "name": "spacing.lg",
+      "value": 16,
+      "type": "spacing",
+      "category": "spacing",
+      "description": "Spacing unit: lg"
+    },
+    {
+      "name": "spacing.xl",
+      "value": 20,
+      "type": "spacing",
+      "category": "spacing",
+      "description": "Spacing unit: xl"
+    },
+    {
+      "name": "spacing.xxl",
+      "value": 24,
+      "type": "spacing",
+      "category": "spacing",
+      "description": "Spacing unit: xxl"
+    },
+    {
+      "name": "spacing.xxxl",
+      "value": 32,
+      "type": "spacing",
+      "category": "spacing",
+      "description": "Spacing unit: xxxl"
+    }
+  ]
+}

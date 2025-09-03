@@ -1,0 +1,46 @@
+name: klikd_flutter_ar
+description: Flutter AR variant for Klikd platform with ARCore/ARKit support
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+  flutter: ">=3.10.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  # AR Dependencies
+  arcore_flutter_plugin: ^0.0.9
+  arkit_plugin: ^0.11.0
+  
+  # State Management
+  flutter_bloc: ^8.1.3
+  equatable: ^2.0.5
+  
+  # Networking
+  dio: ^5.3.2
+  retrofit: ^4.0.3
+  
+  # Local Storage
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  
+  # UI
+  cupertino_icons: ^1.0.2
+  
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^2.0.0
+  build_runner: ^2.4.7
+  hive_generator: ^2.0.1
+  retrofit_generator: ^7.0.8
+
+flutter:
+  uses-material-design: true
+  
+  assets:
+    - assets/images/
+    - assets/models/
+    - assets/textures/

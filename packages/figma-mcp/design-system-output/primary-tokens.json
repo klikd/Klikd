@@ -1,0 +1,26 @@
+{
+  "category": "primary",
+  "tokens": [
+    {
+      "name": "color.primary.klikd_green",
+      "value": "#ECFF00",
+      "type": "color",
+      "category": "primary",
+      "description": "Klikd primary brand color: klikd_green"
+    },
+    {
+      "name": "color.primary.klikd_black",
+      "value": "#0B0B0B",
+      "type": "color",
+      "category": "primary",
+      "description": "Klikd primary brand color: klikd_black"
+    },
+    {
+      "name": "color.primary.klikd_white",
+      "value": "#FFFFFF",
+      "type": "color",
+      "category": "primary",
+      "description": "Klikd primary brand color: klikd_white"
+    }
+  ]
+}
