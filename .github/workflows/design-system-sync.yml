@@ -60,39 +60,23 @@ jobs:
         with:
           fetch-depth: 0 # Full history for better change detection
           
-      - name: 🟢 Install Node.js manually
-        run: |
-          # Download and install Node.js 18 manually to avoid any lock file checks
-          echo "Installing Node.js 18 manually..."
-          curl -fsSL https://nodejs.org/dist/v18.19.0/node-v18.19.0-linux-x64.tar.xz -o node.tar.xz
-          sudo tar -xJf node.tar.xz -C /usr/local --strip-components=1
-          rm node.tar.xz
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
           
-          # Add to PATH and verify installation
-          export PATH="/usr/local/bin:$PATH"
-          echo "Node.js version: $(node --version)"
-          echo "npm version: $(npm --version)"
-          
-      - name: 📦 Install pnpm manually
-        run: |
-          # Install pnpm globally using npm
-          echo "Installing pnpm 8..."
-          npm install -g pnpm@8
-          
-          # Verify installation
-          echo "pnpm version: $(pnpm --version)"
+      - name: 📦 Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
           
       - name: 📚 Install dependencies
         run: |
-          # Set PATH to ensure we use the manually installed tools
-          export PATH="/usr/local/bin:$PATH"
           echo "Installing dependencies with pnpm..."
           pnpm install --frozen-lockfile
           
       - name: 🔨 Build Figma MCP package
         run: |
-          # Set PATH to ensure we use the manually installed tools
-          export PATH="/usr/local/bin:$PATH"
           echo "Building Figma MCP package..."
           cd packages/figma-mcp
           pnpm build
@@ -117,8 +101,6 @@ jobs:
         env:
           FIGMA_ACCESS_TOKEN: ${{ secrets.FIGMA_ACCESS_TOKEN }}
         run: |
-          # Set PATH to ensure we use the manually installed tools
-          export PATH="/usr/local/bin:$PATH"
           echo "Running design system sync..."
           cd packages/figma-mcp
           
@@ -165,6 +147,7 @@ jobs:
               if [ -f "$file" ]; then
                 category=$(basename "$file" -tokens.json)
                 count=$(jq '.tokens | length' "$file")
+                echo "- **$category**: $count tokens"
                 echo "- **$category**: $count tokens" >> sync-report.md
               fi
             done
