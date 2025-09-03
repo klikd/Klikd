@@ -1,5 +1,6 @@
 name: 🎨 Design System Auto-Sync
 
+# Updated workflow using standard GitHub Actions - no manual installation
 on:
   # Trigger on design system changes
   push:
