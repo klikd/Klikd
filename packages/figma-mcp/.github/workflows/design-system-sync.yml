@@ -60,24 +60,16 @@ jobs:
         with:
           fetch-depth: 0 # Full history for better change detection
           
-      - name: 🟢 Install Node.js manually
-        run: |
-          # Download and install Node.js 18 manually to avoid lock file checks
-          curl -fsSL https://nodejs.org/dist/v18.19.0/node-v18.19.0-linux-x64.tar.xz -o node.tar.xz
-          sudo tar -xJf node.tar.xz -C /usr/local --strip-components=1
-          rm node.tar.xz
+      - name: 🟢 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+          cache: 'pnpm'
           
-          # Verify installation
-          node --version
-          npm --version
-          
-      - name: 📦 Install pnpm manually
-        run: |
-          # Install pnpm globally using npm
-          npm install -g pnpm@8
-          
-          # Verify installation
-          pnpm --version
+      - name: 📦 Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
           
       - name: 📚 Install dependencies
         run: pnpm install --frozen-lockfile

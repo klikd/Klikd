@@ -19,7 +19,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
-          cache: 'npm'
+          cache: 'pnpm'
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8.15.0
+      - run: pnpm install --frozen-lockfile
       - run: node scripts/check-env.mjs
         env:
           DATABASE_URL: ${{ secrets.DATABASE_URL }}
@@ -34,8 +38,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
-          cache: 'npm'
-      - run: npm install -g pnpm@8.15.0
+          cache: 'pnpm'
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8.15.0
       - run: pnpm install --frozen-lockfile
       - run: pnpm run check:contracts
 
@@ -47,8 +53,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
-          cache: 'npm'
-      - run: npm install -g pnpm@8.15.0
+          cache: 'pnpm'
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8.15.0
       - run: pnpm install --frozen-lockfile
       - run: pnpm run lint
 
@@ -61,8 +69,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
-          cache: 'npm'
-      - run: npm install -g pnpm@8.15.0
+          cache: 'pnpm'
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8.15.0
       - run: pnpm install --frozen-lockfile
       - run: pnpm run typecheck
 
@@ -99,8 +109,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-          cache: 'npm'
-      - run: npm install -g pnpm@8.15.0
+          cache: 'pnpm'
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8.15.0
       - run: pnpm install --frozen-lockfile
       - run: pnpm run test
         env:
@@ -116,8 +128,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
-          cache: 'npm'
-      - run: npm install -g pnpm@8.15.0
+          cache: 'pnpm'
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8.15.0
       - run: pnpm install --frozen-lockfile
       - run: pnpm run build
 
@@ -129,9 +143,12 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
-          cache: 'npm'
-      - run: npm install -g pnpm@8.15.0 @expo/cli
+          cache: 'pnpm'
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8.15.0
       - run: pnpm install --frozen-lockfile
+      - run: pnpm add -g @expo/cli
       - run: cd apps/mobile/klikd-ar && expo export --platform web
       - run: cd apps/mobile/klikd-ar && pnpm run test
 
@@ -143,8 +160,11 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: '.nvmrc'
-          cache: 'npm'
-      - run: npm install -g pnpm@8.15.0
+          cache: 'pnpm'
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8.15.0
+      - run: pnpm install --frozen-lockfile
       - run: pnpm audit --audit-level moderate
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
