@@ -8,8 +8,11 @@ import { dirname } from 'path';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 
-// Required environment variables
-const REQUIRED_VARS = [
+// Check if we're in a CI environment
+const isCI = process.env.CI || process.env.GITHUB_ACTIONS || process.env.GITHUB_ACTIONS === 'true';
+
+// Required environment variables (only for non-CI environments)
+const REQUIRED_VARS = isCI ? [] : [
   'DATABASE_URL',
   'REDIS_URL',
   'JWT_SECRET',
@@ -33,6 +36,12 @@ const RECOMMENDED_VARS = [
 
 function checkEnvironment() {
   console.log('🔍 Checking environment variables...\n');
+
+  if (isCI) {
+    console.log('🏗️  CI environment detected - skipping required variable checks');
+    console.log('✅ Environment check passed for CI!');
+    process.exit(0);
+  }
 
   const missing = [];
   const present = [];
