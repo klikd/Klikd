@@ -1,6 +1,6 @@
 // Klikd Design System Types
 // Auto-generated - Do not edit manually
-// Last sync: 2025-09-03T12:37:26.426Z
+// Last sync: 2025-09-03T13:09:26.648Z
 
 export namespace KlikdTokens {
 
