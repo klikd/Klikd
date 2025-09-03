@@ -33,12 +33,15 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '18'
-          cache: 'npm'
+          cache: 'pnpm'
+          
+      - name: Install pnpm
+        uses: pnpm/action-setup@v2
+        with:
+          version: 8
           
       - name: Install dependencies
-        run: |
-          npm install -g pnpm
-          pnpm install
+        run: pnpm install --frozen-lockfile
           
       - name: Build Figma MCP package
         run: |
