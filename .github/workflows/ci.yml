@@ -142,7 +142,7 @@ jobs:
           version: 8.15.0
       - run: pnpm install --frozen-lockfile
       - run: pnpm add -g @expo/cli
-      - run: cd apps/mobile/klikd-ar && expo export --platform web
+      - run: cd apps/mobile/klikd-ar && pnpm install
       - run: cd apps/mobile/klikd-ar && pnpm run test
 
   security:
