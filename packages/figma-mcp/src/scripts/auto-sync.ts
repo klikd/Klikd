@@ -2,7 +2,7 @@
 
 import { config } from 'dotenv';
 import { FigmaService } from '../services/FigmaService.js';
-import { FigmaMCPServerConfig } from '../types/index.js';
+import { FigmaMCPServerConfig, DesignToken, DesignTokenGroup } from '../types/index.js';
 import { writeFileSync, readFileSync, existsSync, mkdirSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
@@ -98,42 +98,55 @@ class AutoSyncManager {
   }
 
   async start() {
-    console.log(chalk.blue('🚀 Starting Klikd Design System Auto-Sync...\n'));
-    
-    // Ensure output directory exists
-    if (!existsSync(this.options.outputDir)) {
-      mkdirSync(this.options.outputDir, { recursive: true });
-    }
-
-    // Initial sync
-    await this.performSync();
-
     if (this.options.watch) {
       await this.startWatching();
+    } else {
+      await this.sync();
     }
   }
 
-  private async performSync() {
-    const spinner = ora('🔄 Syncing design system...').start();
+  private async startWatching() {
+    this.isWatching = true;
+    console.log(chalk.blue(`🔄 Starting watch mode - syncing every ${this.options.interval}ms`));
+    
+    while (this.isWatching) {
+      try {
+        await this.sync();
+        await new Promise(resolve => setTimeout(resolve, this.options.interval));
+      } catch (error) {
+        console.error(chalk.red(`❌ Watch sync failed: ${error instanceof Error ? error.message : 'Unknown error'}`));
+        await new Promise(resolve => setTimeout(resolve, this.options.interval));
+      }
+    }
+  }
+
+  async stop() {
+    this.isWatching = false;
+    console.log(chalk.blue('⏹️  Watch mode stopped'));
+  }
+
+  private async sync() {
+    const spinner = ora('🔄 Starting design system sync...').start();
     
     try {
-      // Step 1: Generate design tokens from code
-      const designTokens = this.generateDesignTokensFromCode();
-      spinner.text = '📝 Generated design tokens from code...';
+      // Ensure output directory exists
+      if (!existsSync(this.options.outputDir)) {
+        mkdirSync(this.options.outputDir, { recursive: true });
+      }
 
-      // Step 2: Export tokens to various formats
-      await this.exportTokens(designTokens);
-      spinner.text = '💾 Exported tokens to multiple formats...';
+      spinner.text = '🎨 Generating design tokens from code...';
+      const designTokens: DesignToken[] = this.generateDesignTokensFromCode();
 
-      // Step 3: Validate Figma file (if enabled)
       if (this.options.validate) {
         spinner.text = '🔍 Validating Figma file...';
         await this.validateFigmaFile();
       }
 
-      // Step 4: Generate additional outputs
+      spinner.text = '📤 Exporting design tokens...';
+      await this.exportTokens(designTokens);
+
       if (this.options.generateTypes) {
-        spinner.text = '🔧 Generating TypeScript types...';
+        spinner.text = '📝 Generating TypeScript types...';
         this.generateTypeScriptTypes(designTokens);
       }
 
@@ -166,8 +179,8 @@ class AutoSyncManager {
     }
   }
 
-  private generateDesignTokensFromCode() {
-    const designTokens = [];
+  private generateDesignTokensFromCode(): DesignToken[] {
+    const designTokens: DesignToken[] = [];
     
     // Convert colors to tokens
     Object.entries(KlikdDesignSystem.colors.primary).forEach(([name, value]) => {
@@ -226,7 +239,7 @@ class AutoSyncManager {
     return designTokens;
   }
 
-  private async exportTokens(designTokens: any[]) {
+  private async exportTokens(designTokens: DesignToken[]) {
     const tokenData = {
       name: 'Klikd Design System',
       version: '1.0.0',
@@ -247,198 +260,273 @@ class AutoSyncManager {
     );
 
     // Export grouped by category
-    const categories = {};
+    const groupedTokens: Record<string, DesignToken[]> = {};
     designTokens.forEach(token => {
-      if (!categories[token.category]) categories[token.category] = [];
-      categories[token.category].push(token);
+      const category = token.category || 'other';
+      if (!groupedTokens[category]) {
+        groupedTokens[category] = [];
+      }
+      groupedTokens[category].push(token);
     });
 
-    Object.entries(categories).forEach(([category, tokens]) => {
+    Object.entries(groupedTokens).forEach(([category, tokens]) => {
+      const categoryData = {
+        name: `${category} tokens`,
+        category,
+        tokens,
+        metadata: {
+          generatedAt: new Date().toISOString(),
+          count: tokens.length
+        }
+      };
+
       writeFileSync(
         join(this.options.outputDir, `${category}-tokens.json`),
-        JSON.stringify({ category, tokens }, null, 2)
+        JSON.stringify(categoryData, null, 2)
       );
     });
+
+    console.log(chalk.green(`✅ Exported ${designTokens.length} design tokens to ${this.options.outputDir}`));
   }
 
-  private async validateFigmaFile() {
-    try {
-      const validation = await this.figmaService.validateFile(this.options.fileKey);
-      if (!validation.isValid) {
-        console.log(chalk.yellow(`⚠️  Figma file validation issues found: ${validation.issues.length}`));
-      }
-    } catch (error) {
-      console.log(chalk.yellow(`⚠️  Figma validation skipped: ${error instanceof Error ? error.message : 'Unknown error'}`));
-    }
-  }
+  private generateTypeScriptTypes(designTokens: DesignToken[]) {
+    let typeScriptCode = `// Auto-generated TypeScript types for Klikd Design System
+// Generated at: ${new Date().toISOString()}
 
-  private generateTypeScriptTypes(designTokens: any[]) {
-    const categories = {};
-    designTokens.forEach(token => {
-      if (!categories[token.category]) categories[token.category] = [];
-      categories[token.category].push(token);
-    });
+export interface DesignToken {
+  name: string;
+  value: string | number | Record<string, unknown>;
+  type: 'color' | 'spacing' | 'typography' | 'borderRadius' | 'shadow' | 'animation' | 'component';
+  description?: string;
+  category?: string;
+  tags?: string[];
+  metadata?: Record<string, unknown>;
+}
 
-    let typeScriptCode = `// Klikd Design System Types
-// Auto-generated - Do not edit manually
-// Last sync: ${this.lastSyncTime?.toISOString()}
+export interface DesignTokenGroup {
+  name: string;
+  category: string;
+  tokens: DesignToken[];
+  metadata?: Record<string, unknown>;
+}
 
-export namespace KlikdTokens {
+export interface DesignSystem {
+  name: string;
+  version: string;
+  description?: string;
+  tokens: DesignTokenGroup[];
+  metadata?: Record<string, unknown>;
+}
+
+// Generated token constants
+export const DESIGN_TOKENS: DesignToken[] = ${JSON.stringify(designTokens, null, 2)};
+
+// Token counts by category
+export const TOKEN_COUNTS = {
+  totalTokens: designTokens.length,
 `;
 
-    Object.entries(categories).forEach(([category, tokens]) => {
-      typeScriptCode += `\n  // ${category} tokens (${tokens.length})\n`;
-      
-      tokens.forEach(token => {
-        const typeName = token.name.replace(/[.-]/g, '_');
-        const value = typeof token.value === 'string' ? `'${token.value}'` : token.value;
-        typeScriptCode += `  export const ${typeName} = ${value}; // ${token.description}\n`;
-      });
-    });
-    
-    typeScriptCode += `\n  // All tokens\n  export const all = {\n`;
+    // Group tokens by category for the counts
+    const groupedTokens: Record<string, DesignToken[]> = {};
     designTokens.forEach(token => {
-      const typeName = token.name.replace(/[.-]/g, '_');
-      typeScriptCode += `    ${typeName},\n`;
+      const category = token.category || 'other';
+      if (!groupedTokens[category]) {
+        groupedTokens[category] = [];
+      }
+      groupedTokens[category].push(token);
     });
-    typeScriptCode += `  } as const;\n}\n`;
-    
-    writeFileSync(join(this.options.outputDir, 'klikd-tokens.ts'), typeScriptCode);
+
+    Object.entries(groupedTokens).forEach(([category, tokens]) => {
+      typeScriptCode += `\n  // ${category} tokens (${tokens.length})\n`;
+      typeScriptCode += `  ${category}: ${tokens.length},\n`;
+    });
+
+    typeScriptCode += `};
+
+// Export the design system
+export const KLIKD_DESIGN_SYSTEM: DesignSystem = {
+  name: 'Klikd Design System',
+  version: '1.0.0',
+  description: 'Official Klikd brand design system',
+  tokens: Object.entries(groupedTokens).map(([category, tokens]) => ({
+    name: \`\${category} tokens\`,
+    category,
+    tokens,
+    metadata: {
+      count: tokens.length
+    }
+  })),
+  metadata: {
+    generatedAt: '${new Date().toISOString()}',
+    totalTokens: designTokens.length
+  }
+};
+`;
+
+    writeFileSync(
+      join(this.options.outputDir, 'design-tokens.types.ts'),
+      typeScriptCode
+    );
+
+    console.log(chalk.green(`✅ Generated TypeScript types with ${designTokens.length} tokens`));
   }
 
-  private generateCSSVariables(designTokens: any[]) {
-    let cssCode = `/* Klikd Design System CSS Variables */
-/* Auto-generated - Do not edit manually */
-/* Last sync: ${this.lastSyncTime?.toISOString()} */
+  private generateCSSVariables(designTokens: DesignToken[]) {
+    let cssCode = `/* Auto-generated CSS variables for Klikd Design System */
+/* Generated at: ${new Date().toISOString()} */
 
 :root {
 `;
 
     designTokens.forEach(token => {
-      const cssVarName = `--klikd-${token.name.replace(/[.-]/g, '-')}`;
-      cssCode += `  ${cssVarName}: ${token.value}; /* ${token.description} */\n`;
+      const cssName = `--${token.name.replace(/\./g, '-')}`;
+      cssCode += `  ${cssName}: ${token.value};\n`;
     });
 
-    cssCode += `}\n`;
-    writeFileSync(join(this.options.outputDir, 'klikd-tokens.css'), cssCode);
+    cssCode += `}
+
+/* Token count: ${designTokens.length} */`;
+
+    writeFileSync(
+      join(this.options.outputDir, 'design-tokens.css'),
+      cssCode
+    );
+
+    console.log(chalk.green(`✅ Generated CSS variables with ${designTokens.length} tokens`));
   }
 
-  private generateSCSSVariables(designTokens: any[]) {
-    let scssCode = `// Klikd Design System SCSS Variables
-// Auto-generated - Do not edit manually
-// Last sync: ${this.lastSyncTime?.toISOString()}
+  private generateSCSSVariables(designTokens: DesignToken[]) {
+    let scssCode = `// Auto-generated SCSS variables for Klikd Design System
+// Generated at: ${new Date().toISOString()}
 
 `;
 
     designTokens.forEach(token => {
-      const scssVarName = `$klikd-${token.name.replace(/[.-]/g, '-')}`;
-      scssCode += `${scssVarName}: ${token.value}; // ${token.description}\n`;
+      const scssName = `$${token.name.replace(/\./g, '-')}`;
+      scssCode += `${scssName}: ${token.value};\n`;
     });
 
-    writeFileSync(join(this.options.outputDir, 'klikd-tokens.scss'), scssCode);
+    scssCode += `\n// Token count: ${designTokens.length}`;
+
+    writeFileSync(
+      join(this.options.outputDir, 'design-tokens.scss'),
+      scssCode
+    );
+
+    console.log(chalk.green(`✅ Generated SCSS variables with ${designTokens.length} tokens`));
   }
 
-  private generateStorybookConfig(designTokens: any[]) {
-    const categories = {};
-    designTokens.forEach(token => {
-      if (!categories[token.category]) categories[token.category] = [];
-      categories[token.category].push(token);
-    });
-
+  private generateStorybookConfig(designTokens: DesignToken[]) {
     const storybookConfig = {
       title: 'Klikd Design System',
       parameters: {
-        designTokens: {
-          categories,
-          metadata: {
-            generatedAt: this.lastSyncTime?.toISOString(),
-            totalTokens: designTokens.length
+        docs: {
+          description: {
+            component: 'Official Klikd brand design system tokens and components'
           }
+        }
+      },
+      argTypes: {
+        backgroundColor: {
+          control: 'color'
         }
       }
     };
 
     writeFileSync(
-      join(this.options.outputDir, 'storybook-config.json'),
-      JSON.stringify(storybookConfig, null, 2)
+      join(this.options.outputDir, '.storybook/main.js'),
+      `module.exports = ${JSON.stringify(storybookConfig, null, 2)};`
     );
+
+    console.log(chalk.green(`✅ Generated Storybook configuration`));
   }
 
-  private async startWatching() {
-    this.isWatching = true;
-    console.log(chalk.blue(`\n👀 Watching for changes (sync every ${this.options.interval}ms)...`));
-    console.log(chalk.gray('Press Ctrl+C to stop watching\n'));
-
-    const interval = setInterval(async () => {
-      if (!this.isWatching) {
-        clearInterval(interval);
-        return;
+  private async validateFigmaFile() {
+    try {
+      const validation = await this.figmaService.validateFigmaFile(this.options.fileKey);
+      if (validation.isValid) {
+        console.log(chalk.green(`✅ Figma file validation passed`));
+      } else {
+        console.log(chalk.yellow(`⚠️  Figma file validation warnings: ${validation.issues.length}`));
+        validation.issues.forEach(issue => {
+          console.log(chalk.yellow(`  • ${issue.type}: ${issue.message}`));
+        });
       }
-
-      try {
-        await this.performSync();
-      } catch (error) {
-        console.error(chalk.red(`❌ Watch sync failed: ${error instanceof Error ? error.message : 'Unknown error'}`));
-      }
-    }, this.options.interval);
-
-    // Handle graceful shutdown
-    process.on('SIGINT', () => {
-      this.isWatching = false;
-      clearInterval(interval);
-      console.log(chalk.blue('\n👋 Stopping auto-sync...'));
-      process.exit(0);
-    });
+    } catch (error) {
+      console.log(chalk.yellow(`⚠️  Figma validation skipped: ${error instanceof Error ? error.message : 'Unknown error'}`));
+    }
   }
 }
 
-async function main() {
-  const program = new Command();
-  
-  program
-    .name('klikd-auto-sync')
-    .description('Automatically sync Klikd design system between code and Figma')
-    .version('1.0.0')
-    .requiredOption('-f, --file-key <key>', 'Figma file key to sync with')
-    .option('-o, --output-dir <path>', 'Output directory for generated files', './design-system-output')
-    .option('-w, --watch', 'Watch for changes and auto-sync', false)
-    .option('-i, --interval <ms>', 'Sync interval in milliseconds when watching', '30000')
-    .option('-v, --validate', 'Validate Figma file during sync', true)
-    .option('--generate-types', 'Generate TypeScript types', true)
-    .option('--generate-css', 'Generate CSS variables', true)
-    .option('--generate-scss', 'Generate SCSS variables', true)
-    .option('--generate-storybook', 'Generate Storybook configuration', true)
-    .action(async (options) => {
-      const figmaAccessToken = process.env.FIGMA_ACCESS_TOKEN;
-      if (!figmaAccessToken) {
-        console.error(chalk.red('❌ FIGMA_ACCESS_TOKEN environment variable is required'));
-        process.exit(1);
-      }
+// CLI setup
+const program = new Command();
 
-      const config: FigmaMCPServerConfig = {
-        figmaAccessToken,
-      };
+program
+  .name('auto-sync')
+  .description('Automatically sync design system between code and Figma')
+  .version('1.0.0');
 
-      const syncManager = new AutoSyncManager(config, {
-        fileKey: options.fileKey,
-        outputDir: options.outputDir,
-        watch: options.watch,
-        interval: parseInt(options.interval),
-        validate: options.validate,
-        generateTypes: options.generateTypes,
-        generateCSS: options.generateCSS,
-        generateSCSS: options.generateSCSS,
-        generateStorybook: options.generateStorybook,
-      });
+program
+  .option('-f, --file-key <key>', 'Figma file key to sync with')
+  .option('-o, --output-dir <dir>', 'Output directory for generated files', './design-system-output')
+  .option('-w, --watch', 'Watch mode - continuously sync')
+  .option('-i, --interval <ms>', 'Watch interval in milliseconds', '30000')
+  .option('--validate', 'Validate Figma file before sync')
+  .option('--generate-types', 'Generate TypeScript types')
+  .option('--generate-css', 'Generate CSS variables')
+  .option('--generate-scss', 'Generate SCSS variables')
+  .option('--generate-storybook', 'Generate Storybook configuration');
 
-      await syncManager.start();
-    });
+program.parse();
 
-  program.parse(process.argv);
+const options = program.opts();
+
+// Load environment variables
+const config: FigmaMCPServerConfig = {
+  figmaAccessToken: process.env.FIGMA_ACCESS_TOKEN || '',
+  figmaTeamId: process.env.FIGMA_TEAM_ID,
+  figmaProjectId: process.env.FIGMA_PROJECT_ID,
+  designSystemFileKey: process.env.FIGMA_DESIGN_SYSTEM_FILE_KEY,
+  webhookUrl: process.env.FIGMA_WEBHOOK_URL,
+  syncInterval: parseInt(process.env.FIGMA_SYNC_INTERVAL || '300000'),
+  maxRetries: parseInt(process.env.FIGMA_MAX_RETRIES || '3'),
+  retryDelay: parseInt(process.env.FIGMA_RETRY_DELAY || '1000')
+};
+
+if (!config.figmaAccessToken) {
+  console.error(chalk.red('❌ FIGMA_ACCESS_TOKEN environment variable is required'));
+  process.exit(1);
 }
 
-if (import.meta.url === `file://${process.argv[1]}`) {
-  main().catch(console.error);
+const syncOptions: SyncOptions = {
+  fileKey: options.fileKey || config.designSystemFileKey || '',
+  outputDir: options.outputDir,
+  watch: options.watch,
+  interval: parseInt(options.interval),
+  validate: options.validate,
+  generateTypes: options.generateTypes,
+  generateCSS: options.generateCSS,
+  generateSCSS: options.generateSCSS,
+  generateStorybook: options.generateStorybook
+};
+
+if (!syncOptions.fileKey) {
+  console.error(chalk.red('❌ Figma file key is required. Use -f option or set FIGMA_DESIGN_SYSTEM_FILE_KEY'));
+  process.exit(1);
 }
 
-export { AutoSyncManager, main };
+// Start the sync manager
+const manager = new AutoSyncManager(config, syncOptions);
+
+// Handle graceful shutdown
+process.on('SIGINT', async () => {
+  console.log(chalk.blue('\n🛑 Shutting down gracefully...'));
+  await manager.stop();
+  process.exit(0);
+});
+
+// Run the sync
+manager.start().catch(error => {
+  console.error(chalk.red(`❌ Fatal error: ${error instanceof Error ? error.message : 'Unknown error'}`));
+  process.exit(1);
+});
