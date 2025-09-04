@@ -25,7 +25,6 @@ module.exports = {
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
     '@typescript-eslint/no-explicit-any': 'warn',
-    '@typescript-eslint/prefer-const': 'error',
     
     // Import/export rules
     'import/no-unresolved': 'off', // Let TypeScript handle this
@@ -59,7 +58,6 @@ module.exports = {
         '@typescript-eslint/explicit-function-return-type': 'off',
         '@typescript-eslint/explicit-module-boundary-types': 'off',
         '@typescript-eslint/no-explicit-any': 'warn',
-        '@typescript-eslint/prefer-const': 'error',
       },
     },
     {

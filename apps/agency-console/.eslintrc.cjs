@@ -3,9 +3,10 @@ module.exports = {
     '../../.eslintrc.js'
   ],
   rules: {
-    // Web admin specific rules
+    // Agency console specific rules
     '@typescript-eslint/no-unused-vars': 'error',
     '@typescript-eslint/explicit-function-return-type': 'off',
-    '@typescript-eslint/explicit-module-boundary-types': 'off'
+    '@typescript-eslint/explicit-module-boundary-types': 'off',
+    'no-console': 'off' // Allow console logs in console apps
   }
 };

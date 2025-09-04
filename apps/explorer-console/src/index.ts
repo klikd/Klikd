@@ -26,7 +26,7 @@ export class ExplorerConsoleApp {
     // Implementation would go here
   }
 
-  getUserPermissions(userId: string): string[] {
+  getUserPermissions(_userId: string): string[] {
     // Mock implementation
     return ['read', 'explore', 'moderate'];
   }
