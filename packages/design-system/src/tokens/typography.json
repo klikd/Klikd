@@ -1,0 +1,56 @@
+{
+  "typography": {
+    "size": {
+      "xs": {
+        "value": "10px",
+        "type": "fontSize"
+      },
+      "sm": {
+        "value": "12px",
+        "type": "fontSize"
+      },
+      "md": {
+        "value": "14px",
+        "type": "fontSize"
+      },
+      "lg": {
+        "value": "16px",
+        "type": "fontSize"
+      },
+      "xl": {
+        "value": "18px",
+        "type": "fontSize"
+      },
+      "xxl": {
+        "value": "20px",
+        "type": "fontSize"
+      },
+      "xxxl": {
+        "value": "24px",
+        "type": "fontSize"
+      }
+    },
+    "weight": {
+      "light": {
+        "value": "300",
+        "type": "fontWeight"
+      },
+      "regular": {
+        "value": "400",
+        "type": "fontWeight"
+      },
+      "medium": {
+        "value": "500",
+        "type": "fontWeight"
+      },
+      "semibold": {
+        "value": "600",
+        "type": "fontWeight"
+      },
+      "bold": {
+        "value": "700",
+        "type": "fontWeight"
+      }
+    }
+  }
+}

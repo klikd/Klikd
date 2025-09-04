@@ -1,5 +1,5 @@
 module.exports = {
-  preset: 'jest-expo',
+  testEnvironment: 'node',
   setupFilesAfterEnv: ['<rootDir>/src/tests/setup.ts'],
   testMatch: [
     '**/__tests__/**/*.(ts|tsx|js)',
@@ -14,8 +14,13 @@ module.exports = {
   transform: {
     '^.+\\.(ts|tsx)$': 'babel-jest'
   },
-  testEnvironment: 'jsdom',
   transformIgnorePatterns: [
     'node_modules/(?!(react-native|@react-native|@expo|expo|@react-navigation|react-native-reanimated|react-native-gesture-handler|react-native-screens|react-native-safe-area-context|@react-native-async-storage|@react-native-community|@viro-community)/)'
-  ]
+  ],
+  moduleNameMapper: {
+    '^@/(.*)$': '<rootDir>/src/$1'
+  },
+  globals: {
+    __DEV__: true
+  }
 };

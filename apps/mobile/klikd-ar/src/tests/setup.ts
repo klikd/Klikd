@@ -24,3 +24,32 @@ jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
 
 // Silence the warning: Animated: `useNativeDriver` is not supported
 jest.mock('react-native/Libraries/Animated/NativeAnimatedHelper');
+
+// Mock React Native modules that cause issues
+jest.mock('react-native/Libraries/EventEmitter/NativeEventEmitter');
+jest.mock('@react-native/js-polyfills/error-guard', () => ({
+  ErrorHandler: jest.fn(),
+}));
+
+// Mock the entire React Native jest setup to avoid polyfill issues
+jest.mock('react-native/jest/setup', () => ({}));
+
+// Mock specific problematic modules
+jest.mock('@react-native/js-polyfills', () => ({
+  errorGuard: {
+    ErrorHandler: jest.fn(),
+  },
+}));
+
+// Mock console methods to avoid noise in tests
+global.console = {
+  ...console,
+  log: jest.fn(),
+  debug: jest.fn(),
+  info: jest.fn(),
+  warn: jest.fn(),
+  error: jest.fn(),
+};
+
+// Mock global variables
+global.__DEV__ = true;

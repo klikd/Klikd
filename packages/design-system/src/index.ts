@@ -38,5 +38,4 @@ export const KlikdDesignSystem: DesignSystem = {
   }
 };
 
-// Export types
-export type { DesignToken, DesignTokenGroup, DesignSystem };
+// Types are already exported as interfaces above
