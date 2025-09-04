@@ -20,5 +20,4 @@ export interface ApiResponse<T> {
   message?: string;
 }
 
-// Export basic contract types
-export type { BaseContract, UserContract, ApiResponse };
+// Types are already exported as interfaces above
