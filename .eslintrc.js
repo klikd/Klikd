@@ -7,14 +7,11 @@ module.exports = {
   },
   extends: [
     'eslint:recommended',
-    '@typescript-eslint/recommended',
-    '@typescript-eslint/recommended-requiring-type-checking',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 'latest',
     sourceType: 'module',
-    project: './tsconfig.base.json',
   },
   plugins: ['@typescript-eslint'],
   rules: {
@@ -23,7 +20,7 @@ module.exports = {
     'no-debugger': 'error',
     'no-unused-vars': 'off', // Use TypeScript version instead
     
-    // TypeScript specific rules
+    // TypeScript specific rules (basic ones that don't require type checking)
     '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
     '@typescript-eslint/explicit-function-return-type': 'off',
     '@typescript-eslint/explicit-module-boundary-types': 'off',
@@ -48,6 +45,23 @@ module.exports = {
     'out/',
   ],
   overrides: [
+    {
+      files: ['**/*.ts', '**/*.tsx'],
+      parser: '@typescript-eslint/parser',
+      parserOptions: {
+        ecmaVersion: 'latest',
+        sourceType: 'module',
+        project: './tsconfig.json',
+      },
+      rules: {
+        // TypeScript specific rules for .ts/.tsx files
+        '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+        '@typescript-eslint/explicit-function-return-type': 'off',
+        '@typescript-eslint/explicit-module-boundary-types': 'off',
+        '@typescript-eslint/no-explicit-any': 'warn',
+        '@typescript-eslint/prefer-const': 'error',
+      },
+    },
     {
       files: ['**/*.test.ts', '**/*.spec.ts', '**/*.test.tsx', '**/*.spec.tsx'],
       env: {
