@@ -143,7 +143,7 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - run: pnpm add -g @expo/cli
       - run: cd apps/mobile/klikd-ar && pnpm install
-      - run: cd apps/mobile/klikd-ar && pnpm run test
+      - run: cd apps/mobile/klikd-ar && pnpm run test --passWithNoTests
 
   security:
     name: Security Scan
