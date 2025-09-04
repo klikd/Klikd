@@ -94,7 +94,7 @@ export const MCPResponseSchema = z.object({
 });
 
 // Figma MCP Specific Types
-export const FigmaMCPServerConfig = z.object({
+export const FigmaMCPServerConfigSchema = z.object({
   figmaAccessToken: z.string(),
   figmaTeamId: z.string().optional(),
   figmaProjectId: z.string().optional(),
@@ -105,7 +105,7 @@ export const FigmaMCPServerConfig = z.object({
   retryDelay: z.number().default(1000)
 });
 
-export const FigmaSyncResult = z.object({
+export const FigmaSyncResultSchema = z.object({
   success: z.boolean(),
   tokensSynced: z.number(),
   componentsSynced: z.number(),
@@ -114,7 +114,7 @@ export const FigmaSyncResult = z.object({
   timestamp: z.string()
 });
 
-export const FigmaValidationResult = z.object({
+export const FigmaValidationResultSchema = z.object({
   isValid: z.boolean(),
   issues: z.array(z.object({
     type: z.enum(['error', 'warning', 'info']),
@@ -140,6 +140,6 @@ export type DesignTokenGroup = z.infer<typeof DesignTokenGroupSchema>;
 export type DesignSystem = z.infer<typeof DesignSystemSchema>;
 export type MCPRequest = z.infer<typeof MCPRequestSchema>;
 export type MCPResponse = z.infer<typeof MCPResponseSchema>;
-export type FigmaMCPServerConfig = z.infer<typeof FigmaMCPServerConfig>;
-export type FigmaSyncResult = z.infer<typeof FigmaSyncResult>;
-export type FigmaValidationResult = z.infer<typeof FigmaValidationResult>;
+export type FigmaMCPServerConfig = z.infer<typeof FigmaMCPServerConfigSchema>;
+export type FigmaSyncResult = z.infer<typeof FigmaSyncResultSchema>;
+export type FigmaValidationResult = z.infer<typeof FigmaValidationResultSchema>;

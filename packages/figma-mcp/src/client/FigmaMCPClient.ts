@@ -58,7 +58,7 @@ export class FigmaMCPClient {
   /**
    * Get a Figma file
    */
-  async getFigmaFile(fileKey: string): Promise<any> {
+  async getFigmaFile(_fileKey: string): Promise<any> {
     if (!this.isConnected) {
       throw new Error('Client not connected. Call connect() first.');
     }
@@ -74,7 +74,7 @@ export class FigmaMCPClient {
   /**
    * Extract design tokens from a Figma file
    */
-  async extractDesignTokens(fileKey: string): Promise<DesignTokenGroup[]> {
+  async extractDesignTokens(_fileKey: string): Promise<DesignTokenGroup[]> {
     if (!this.isConnected) {
       throw new Error('Client not connected. Call connect() first.');
     }
@@ -100,7 +100,7 @@ export class FigmaMCPClient {
   /**
    * Validate a Figma file
    */
-  async validateFigmaFile(fileKey: string): Promise<FigmaValidationResult> {
+  async validateFigmaFile(_fileKey: string): Promise<FigmaValidationResult> {
     if (!this.isConnected) {
       throw new Error('Client not connected. Call connect() first.');
     }
@@ -122,7 +122,7 @@ export class FigmaMCPClient {
   /**
    * Sync design system
    */
-  async syncDesignSystem(fileKey: string, outputPath?: string): Promise<FigmaSyncResult> {
+  async syncDesignSystem(_fileKey: string, _outputPath?: string): Promise<FigmaSyncResult> {
     if (!this.isConnected) {
       throw new Error('Client not connected. Call connect() first.');
     }

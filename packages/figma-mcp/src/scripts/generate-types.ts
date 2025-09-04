@@ -4,14 +4,14 @@ import { config } from 'dotenv';
 import { FigmaService } from '../services/FigmaService.js';
 import { FigmaMCPServerConfig, DesignToken, DesignTokenGroup } from '../types/index.js';
 import { writeFileSync, mkdirSync } from 'fs';
-import { join, dirname } from 'path';
+import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import chalk from 'chalk';
 import ora from 'ora';
 import { Command } from 'commander';
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const _dirname = dirname(__filename);
 
 // Load environment variables
 config();
@@ -236,7 +236,7 @@ function getTokenType(type: string, strict: boolean): string {
   }
 }
 
-function formatTokenValue(token: DesignToken, options: GenerateTypesOptions): string {
+function formatTokenValue(token: DesignToken, _options: GenerateTypesOptions): string {
   if (typeof token.value === 'string') {
     return `"${token.value}"`;
   } else if (typeof token.value === 'number') {

@@ -4,14 +4,14 @@ import { config } from 'dotenv';
 import { FigmaService } from '../services/FigmaService.js';
 import { FigmaMCPServerConfig } from '../types/index.js';
 import { writeFileSync, mkdirSync } from 'fs';
-import { join, dirname } from 'path';
+import { dirname } from 'path';
 import { fileURLToPath } from 'url';
 import chalk from 'chalk';
 import ora from 'ora';
 import { Command } from 'commander';
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const _dirname = dirname(__filename);
 
 // Load environment variables
 config();

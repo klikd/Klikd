@@ -2,8 +2,8 @@
 
 import { config } from 'dotenv';
 import { FigmaService } from '../services/FigmaService.js';
-import { FigmaMCPServerConfig, DesignToken, DesignTokenGroup } from '../types/index.js';
-import { writeFileSync, readFileSync, existsSync, mkdirSync } from 'fs';
+import { FigmaMCPServerConfig, DesignToken } from '../types/index.js';
+import { writeFileSync, existsSync, mkdirSync } from 'fs';
 import { join, dirname } from 'path';
 import { fileURLToPath } from 'url';
 import chalk from 'chalk';
@@ -14,7 +14,7 @@ import { Command } from 'commander';
 config();
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const _dirname = dirname(__filename);
 
 // Klikd Design System from your repository
 const KlikdDesignSystem = {
@@ -416,7 +416,7 @@ export const KLIKD_DESIGN_SYSTEM: DesignSystem = {
     console.log(chalk.green(`✅ Generated SCSS variables with ${designTokens.length} tokens`));
   }
 
-  private generateStorybookConfig(designTokens: DesignToken[]) {
+  private generateStorybookConfig(_designTokens: DesignToken[]) {
     const storybookConfig = {
       title: 'Klikd Design System',
       parameters: {
@@ -482,7 +482,7 @@ program.parse();
 const options = program.opts();
 
 // Load environment variables
-const config: FigmaMCPServerConfig = {
+const figmaConfig: FigmaMCPServerConfig = {
   figmaAccessToken: process.env.FIGMA_ACCESS_TOKEN || '',
   figmaTeamId: process.env.FIGMA_TEAM_ID,
   figmaProjectId: process.env.FIGMA_PROJECT_ID,
@@ -493,13 +493,13 @@ const config: FigmaMCPServerConfig = {
   retryDelay: parseInt(process.env.FIGMA_RETRY_DELAY || '1000')
 };
 
-if (!config.figmaAccessToken) {
+if (!figmaConfig.figmaAccessToken) {
   console.error(chalk.red('❌ FIGMA_ACCESS_TOKEN environment variable is required'));
   process.exit(1);
 }
 
 const syncOptions: SyncOptions = {
-  fileKey: options.fileKey || config.designSystemFileKey || '',
+  fileKey: options.fileKey || figmaConfig.designSystemFileKey || '',
   outputDir: options.outputDir,
   watch: options.watch,
   interval: parseInt(options.interval),
@@ -516,7 +516,7 @@ if (!syncOptions.fileKey) {
 }
 
 // Start the sync manager
-const manager = new AutoSyncManager(config, syncOptions);
+const manager = new AutoSyncManager(figmaConfig, syncOptions);
 
 // Handle graceful shutdown
 process.on('SIGINT', async () => {

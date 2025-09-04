@@ -3,11 +3,10 @@ import { StdioServerTransport } from '@modelcontextprotocol/sdk/server/stdio.js'
 import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
-  Tool,
 } from '@modelcontextprotocol/sdk/types.js';
 import { FigmaService } from '../services/FigmaService.js';
-import { FigmaMCPServerConfig, FigmaSyncResult, FigmaValidationResult } from '../types/index.js';
-import { z } from 'zod';
+import { FigmaMCPServerConfig, FigmaSyncResult } from '../types/index.js';
+// import { z } from 'zod';
 
 export class FigmaMCPServer {
   private server: Server;

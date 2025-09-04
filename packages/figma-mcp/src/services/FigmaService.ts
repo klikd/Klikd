@@ -1,6 +1,6 @@
 import axios, { AxiosInstance } from 'axios';
 import { FigmaFile, FigmaNode, FigmaProject, DesignToken, DesignTokenGroup, FigmaMCPServerConfig } from '../types/index.js';
-import { FigmaNodeSchema, FigmaFileSchema, FigmaProjectSchema } from '../types/index.js';
+import { FigmaFileSchema, FigmaProjectSchema } from '../types/index.js';
 
 export class FigmaService {
   private client: AxiosInstance;
